@@ -1,0 +1,5 @@
+# Project exclude paths
+/target/
+/.idea/
+/testdb.mv.db
+/testdb.trace.db
