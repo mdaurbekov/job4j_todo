@@ -44,11 +44,11 @@
     </nav>
     <div >
         <div class="card-header">
-            <a th:href="@{/tasks}">  Все</a>
-            <a th:href="@{/onlyNotDone}"> | Новые</a>
-            <a th:href="@{/onlyDone}"> | Выполненные</a>
+            <a th:href="@{/tasks/}">  Все</a>
+            <a th:href="@{/tasks/onlyNotDone}"> | Новые</a>
+            <a th:href="@{/tasks/onlyDone}"> | Выполненные</a>
         </div>
-        <div><a th:href="@{/formAddTask}">  Новая задача </a></div>
+        <div><a th:href="@{/tasks/formAdd}">  Новая задача </a></div>
         <table class="table">
             <thead>
             <tr>
@@ -72,7 +72,7 @@
                 <i class="fa fa-square-o"></i>
                </span>
                 </td>
-                <td><a th:href="@{|/formViewTask/${task.id}|}">
+                <td><a th:href="@{|/tasks/formView/${task.id}|}">
                     Перейти
                 </a></td>
             </tr>

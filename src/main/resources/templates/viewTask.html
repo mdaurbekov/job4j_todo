@@ -55,17 +55,17 @@
                         <input type="text" class="form-control" name="name" id="name" th:field="*{description}" readonly>
                     </div>
                 </form>
-                <form th:action="@{|/executeTask/${task.id}|}" th:object="${task}" method="GET">
+                <form th:action="@{|/tasks/execute/${task.id}|}" th:object="${task}" method="GET">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <button type="submit" class="btn btn-primary">Выполнить</button>
                 </form>
 
-                <form th:action="@{|/formUpdateTask/${task.id}|}" th:object="${task}" method="GET">
+                <form th:action="@{|/tasks/formUpdate/${task.id}|}" th:object="${task}" method="GET">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <button type="submit" class="btn btn-primary">Редактировать</button>
                 </form>
 
-                <form th:action="@{|/deleteTask/${task.id}|}" th:object="${task}" method="GET">
+                <form th:action="@{|/tasks/delete/${task.id}|}" th:object="${task}" method="GET">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <button type="submit" class="btn btn-primary">Удалить</button>
                 </form>

@@ -15,9 +15,9 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
 
-    public void add(Task task) {
+    public boolean add(Task task) {
         task.setCreated(LocalDateTime.now());
-        taskRepository.add(task);
+        return taskRepository.add(task);
     }
 
     public Task findById(int id) {
@@ -32,16 +32,16 @@ public class TaskService {
         return taskRepository.getOnly(bool);
     }
 
-    public void delete(int id) {
-        taskRepository.delete(id);
+    public boolean delete(int id) {
+        return taskRepository.delete(id);
     }
 
-    public void execute(int id) {
-        taskRepository.execute(id);
+    public boolean execute(int id) {
+        return taskRepository.execute(id);
     }
 
-    public void update(Task task) {
-        taskRepository.update(task);
+    public boolean update(Task task) {
+        return taskRepository.update(task);
     }
 
 

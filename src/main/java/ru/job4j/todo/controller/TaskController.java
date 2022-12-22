@@ -4,14 +4,9 @@ import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
-import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.TaskService;
-import ru.job4j.todo.util.UserSession;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -19,75 +14,82 @@ import java.time.LocalDateTime;
 @ThreadSafe
 @Controller
 @AllArgsConstructor
+@RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping("/tasks")
-    public String tasks(Model model, HttpSession session) {
-        User user = UserSession.getUser(session);
-        model.addAttribute("user", user);
+    @GetMapping("/")
+    public String all(Model model, HttpSession session) {
         model.addAttribute("tasks", taskService.getAll());
         return "tasks";
     }
 
     @GetMapping("/onlyDone")
     public String onlyDone(Model model, HttpSession session) {
-        User user = UserSession.getUser(session);
-        model.addAttribute("user", user);
         model.addAttribute("tasks", taskService.getOnly(true));
         return "tasks";
     }
 
     @GetMapping("/onlyNotDone")
     public String onlyNotDone(Model model, HttpSession session) {
-        User user = UserSession.getUser(session);
-        model.addAttribute("user", user);
         model.addAttribute("tasks", taskService.getOnly(false));
         return "tasks";
     }
 
-    @GetMapping("/formAddTask")
+    @GetMapping("/formAdd")
     public String addTask(Model model) {
         model.addAttribute("post", new Task(0, "Описание",
                 LocalDateTime.now(), false));
         return "addTask";
     }
 
-    @PostMapping("/createTask")
-    public String createTask(@ModelAttribute Task task) {
-        taskService.add(task);
-        return "redirect:/tasks";
+    @PostMapping("/create")
+    public String createTask(Model model, @ModelAttribute Task task) {
+        boolean success = taskService.add(task);
+        if (!success) {
+            model.addAttribute("fail", true);
+            return "error";
+        }
+        return "redirect:/tasks/";
     }
 
-    @GetMapping("/formViewTask/{Id}")
+    @GetMapping("/formView/{Id}")
     public String formViewTask(Model model, @PathVariable("Id") int id) {
         model.addAttribute("task", taskService.findById(id));
         return "viewTask";
     }
 
-    @PostMapping("/updateTask")
-    public String updateTask(@ModelAttribute Task task) {
-        taskService.update(task);
-        return "redirect:/tasks";
+    @PostMapping("/update")
+    public String updateTask(Model model, @ModelAttribute Task task) {
+        boolean success = taskService.update(task);
+        if (!success) {
+            model.addAttribute("fail", true);
+            return "error";
+        }
+        return "redirect:/tasks/";
     }
 
-    @GetMapping("/formUpdateTask/{id}")
+    @GetMapping("/formUpdate/{id}")
     public String formUpdatePost(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
         return "updateTask";
     }
 
-    @GetMapping("/executeTask/{id}")
+    @GetMapping("/execute/{id}")
     public String executeTask(@PathVariable("id") int id) {
         taskService.execute(id);
-        return "redirect:/tasks";
+        return "redirect:/tasks/";
     }
 
-    @GetMapping("/deleteTask/{id}")
-    public String deleteTask(@PathVariable("id") int id) {
-        taskService.delete(id);
-        return "redirect:/tasks";
+    @GetMapping("/delete/{id}")
+    public String deleteTask(Model model, @PathVariable("id") int id) {
+        boolean success = taskService.delete(id);
+        if (!success) {
+            model.addAttribute("fail", true);
+            return "error";
+        }
+        return "redirect:/tasks/";
     }
 
 }

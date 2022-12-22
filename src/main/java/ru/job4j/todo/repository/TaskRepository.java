@@ -17,12 +17,13 @@ public class TaskRepository {
     private final SessionFactory sf;
 
 
-    public void add(Task task) {
+    public boolean add(Task task) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.save(task);
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
     public Task findById(int id) {
@@ -53,7 +54,7 @@ public class TaskRepository {
         return rezult;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
         Task task = new Task();
@@ -61,10 +62,11 @@ public class TaskRepository {
         session.delete(task);
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
 
-    public void execute(int id) {
+    public boolean execute(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.createQuery(
@@ -73,14 +75,16 @@ public class TaskRepository {
                 .executeUpdate();
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
-    public void update(Task task) {
+    public boolean update(Task task) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.update(task);
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
 }

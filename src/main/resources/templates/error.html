@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
@@ -18,27 +18,16 @@
     <title>TODO список</title>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">TODO список </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
-    <div class="row pt-3">
+<div class="container pt-3">
+    <div class="row">
         <div class="card" style="width: 100%">
-            <div class="card-body">
-                Новое задание
+            <div class="card-header">
+
             </div>
             <div class="card-body">
-                <form th:action="@{/tasks/create}" method="POST">
-                    <div class="form-group">
-                        <input type="hidden" name="id" value="5"/>
-                        <label for="desc">Описание</label>
-                        <input type="text" class="form-control" name="description" id="desc">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
+                <div th:if="${fail}" class="alert alert-danger" role="alert">
+                              Ошибка
+                </div>
             </div>
         </div>
     </div>
