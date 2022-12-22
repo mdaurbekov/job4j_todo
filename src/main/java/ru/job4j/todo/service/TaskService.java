@@ -1,10 +1,10 @@
-package ru.job4j_todo.service;
+package ru.job4j.todo.service;
 
 import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
-import ru.job4j_todo.model.Task;
-import ru.job4j_todo.repository.TaskRepository;
+import ru.job4j.todo.repository.TaskRepository;
+import ru.job4j.todo.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.List;

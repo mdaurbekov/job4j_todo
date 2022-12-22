@@ -1,4 +1,4 @@
-package ru.job4j_todo;
+package ru.job4j.todo;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

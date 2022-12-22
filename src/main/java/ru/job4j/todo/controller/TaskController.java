@@ -1,18 +1,17 @@
-package ru.job4j_todo.controller;
+package ru.job4j.todo.controller;
 
 import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.job4j_todo.model.Task;
-import ru.job4j_todo.model.User;
-import ru.job4j_todo.service.TaskService;
-import ru.job4j_todo.util.UserSession;
+import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.TaskService;
+import ru.job4j.todo.util.UserSession;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;

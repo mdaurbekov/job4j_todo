@@ -1,4 +1,4 @@
-package ru.job4j_todo.repository;
+package ru.job4j.todo.repository;
 
 import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import ru.job4j_todo.model.Task;
+import ru.job4j.todo.model.Task;
 
 import java.util.List;
 
