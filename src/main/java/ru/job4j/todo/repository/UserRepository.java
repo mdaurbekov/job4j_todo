@@ -17,14 +17,20 @@ public class UserRepository {
     private final SessionFactory sf;
 
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         Session session = sf.openSession();
         session.beginTransaction();
-        session.save(user);
+        try {
+            session.save(user);
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            return Optional.empty();
+        }
         session.getTransaction().commit();
         session.close();
-        return user;
+        return Optional.of(user);
     }
+
     public Optional<User> findUserByLogin(String login) {
         Session session = sf.openSession();
         session.beginTransaction();
@@ -35,6 +41,7 @@ public class UserRepository {
         session.close();
         return result;
     }
+
     public Optional<User> findUserByLoginAndPassword(String login, String password) {
         Session session = sf.openSession();
         session.beginTransaction();

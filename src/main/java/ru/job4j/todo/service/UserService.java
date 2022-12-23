@@ -16,7 +16,7 @@ public class UserService {
 
 
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         return userRepository.add(user);
     }
     public Optional<User> findUserByLogin(String login) {

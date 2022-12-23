@@ -23,11 +23,10 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute User user) {
-        Optional<User> regUser = userService.findUserByLogin(user.getLogin());
-        if (!regUser.isEmpty()) {
+        Optional<User> regUser = userService.add(user);
+        if (regUser.isEmpty()) {
             return "redirect:/registrationPage?fail=true";
         }
-        userService.add(user);
         return "redirect:/loginPage";
     }
 
