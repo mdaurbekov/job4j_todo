@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.TaskService;
+import ru.job4j.todo.util.UserSession;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -21,63 +23,71 @@ public class TaskController {
 
     @GetMapping("/")
     public String all(Model model, HttpSession session) {
+        User user = UserSession.getUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("tasks", taskService.getAll());
-        return "tasks";
+        return "task/tasks";
     }
 
     @GetMapping("/onlyDone")
     public String onlyDone(Model model, HttpSession session) {
+        User user = UserSession.getUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("tasks", taskService.getOnly(true));
-        return "tasks";
+        return "task/tasks";
     }
 
     @GetMapping("/onlyNotDone")
     public String onlyNotDone(Model model, HttpSession session) {
+        User user = UserSession.getUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("tasks", taskService.getOnly(false));
-        return "tasks";
+        return "task/tasks";
     }
 
     @GetMapping("/formAdd")
     public String addTask(Model model) {
         model.addAttribute("post", new Task(0, "Описание",
                 LocalDateTime.now(), false));
-        return "addTask";
+        return "/task/add";
     }
 
     @PostMapping("/create")
-    public String createTask(Model model, @ModelAttribute Task task) {
+    public String create(Model model, @ModelAttribute Task task) {
         boolean success = taskService.add(task);
         if (!success) {
             model.addAttribute("fail", true);
-            return "error";
+            return "/shared/error";
         }
         return "redirect:/tasks/";
     }
 
     @GetMapping("/formView/{Id}")
-    public String formViewTask(Model model, @PathVariable("Id") int id) {
+    public String formView(Model model, @PathVariable("Id") int id, HttpSession session) {
+        User user = UserSession.getUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("task", taskService.findById(id));
-        return "viewTask";
+        return "/task/view";
     }
 
     @PostMapping("/update")
-    public String updateTask(Model model, @ModelAttribute Task task) {
+    public String update(Model model, @ModelAttribute Task task) {
         boolean success = taskService.update(task);
         if (!success) {
             model.addAttribute("fail", true);
-            return "error";
+            return "/shared/error";
         }
         return "redirect:/tasks/";
     }
 
     @GetMapping("/formUpdate/{id}")
-    public String formUpdatePost(Model model, @PathVariable("id") int id) {
+    public String formUpdate(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
-        return "updateTask";
+        return "/task/update";
     }
 
     @GetMapping("/execute/{id}")
-    public String executeTask(@PathVariable("id") int id) {
+    public String execute(@PathVariable("id") int id) {
         taskService.execute(id);
         return "redirect:/tasks/";
     }
@@ -87,7 +97,7 @@ public class TaskController {
         boolean success = taskService.delete(id);
         if (!success) {
             model.addAttribute("fail", true);
-            return "error";
+            return "/shared/error";
         }
         return "redirect:/tasks/";
     }
