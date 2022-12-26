@@ -15,13 +15,14 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-
     public Optional<User> add(User user) {
         return userRepository.add(user);
     }
+
     public Optional<User> findUserByLogin(String login) {
         return userRepository.findUserByLogin(login);
     }
+
     public Optional<User> findUserByLoginAndPassword(String login, String password) {
         return userRepository.findUserByLoginAndPassword(login, password);
     }

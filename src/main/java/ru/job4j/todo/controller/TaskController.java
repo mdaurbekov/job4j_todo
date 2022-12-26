@@ -47,7 +47,7 @@ public class TaskController {
 
     @GetMapping("/formAdd")
     public String addTask(Model model) {
-        model.addAttribute("post", new Task(0, "Описание",
+        model.addAttribute("task", new Task(0, "Описание",
                 LocalDateTime.now(), false));
         return "/task/add";
     }
@@ -66,7 +66,7 @@ public class TaskController {
     public String formView(Model model, @PathVariable("Id") int id, HttpSession session) {
         User user = UserSession.getUser(session);
         model.addAttribute("user", user);
-        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("task", taskService.findById(id).get());
         return "/task/view";
     }
 
@@ -82,7 +82,7 @@ public class TaskController {
 
     @GetMapping("/formUpdate/{id}")
     public String formUpdate(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("task", taskService.findById(id).get());
         return "/task/update";
     }
 
@@ -93,7 +93,7 @@ public class TaskController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteTask(Model model, @PathVariable("id") int id) {
+    public String delete(Model model, @PathVariable("id") int id) {
         boolean success = taskService.delete(id);
         if (!success) {
             model.addAttribute("fail", true);

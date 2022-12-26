@@ -8,6 +8,7 @@ import ru.job4j.todo.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @ThreadSafe
 @Service
@@ -20,7 +21,7 @@ public class TaskService {
         return taskRepository.add(task);
     }
 
-    public Task findById(int id) {
+    public Optional<Task> findById(int id) {
         return taskRepository.findById(id);
     }
 
