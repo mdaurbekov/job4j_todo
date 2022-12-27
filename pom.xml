@@ -31,12 +31,12 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        <!--        <profile>-->
-        <!--            <id>production</id>-->
-        <!--            <properties>-->
-        <!--                <liquibase.config>db/liquibase.properties</liquibase.config>-->
-        <!--            </properties>-->
-        <!--        </profile>-->
+                <profile>
+                    <id>production</id>
+                    <properties>
+                        <liquibase.config>db/liquibase.properties</liquibase.config>
+                    </properties>
+                </profile>
     </profiles>
 
     <dependencies>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.12</version>
+            <version>42.4.2</version>
         </dependency>
 
         <dependency>

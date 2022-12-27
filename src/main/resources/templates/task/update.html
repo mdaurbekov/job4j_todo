@@ -43,6 +43,7 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" class="form-control" name="created" id="created" th:field="*{created}">
+                        <input type="hidden" class="form-control" name="user" id="user" th:field="*{user.id}">
                         <input class="form-check-label" type="hidden" name="visible" th:checked="*{done}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>

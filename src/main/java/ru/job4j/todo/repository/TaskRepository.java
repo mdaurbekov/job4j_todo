@@ -29,7 +29,7 @@ public class TaskRepository {
     }
 
     public List<Task> getAll() {
-        return crudRepository.query("from Task", Task.class);
+        return crudRepository.query("from Task f JOIN FETCH f.priority", Task.class);
     }
 
     public List<Task> getOnly(boolean bool) {

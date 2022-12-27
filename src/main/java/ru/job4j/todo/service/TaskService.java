@@ -2,9 +2,12 @@ package ru.job4j.todo.service;
 
 import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.repository.TaskRepository;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.util.UserSession;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +19,8 @@ import java.util.Optional;
 public class TaskService {
     private final TaskRepository taskRepository;
 
-    public boolean add(Task task) {
+    public boolean add(Task task, User user) {
+        task.setUser(user);
         task.setCreated(LocalDateTime.now());
         return taskRepository.add(task);
     }

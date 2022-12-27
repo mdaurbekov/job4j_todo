@@ -29,7 +29,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" th:href="@{/index}">Главная <span
+                <a class="nav-item nav-link active" th:href="@{/tasks/index}">Главная <span
                         class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
@@ -56,6 +56,8 @@
                 <th scope="col">Описание</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Выполнено</th>
+                <th scope="col">Пользователь</th>
+                <th scope="col">Приоритет</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -72,6 +74,8 @@
                 <i class="fa fa-square-o"></i>
                </span>
                 </td>
+                <td th:text="${task.user.name}"/>
+                <td th:text="${task.priority.name}"/>
                 <td><a th:href="@{|/tasks/formView/${task.id}|}">
                     Перейти
                 </a></td>
