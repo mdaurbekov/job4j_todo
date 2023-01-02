@@ -5,14 +5,15 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
+import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 import ru.job4j.todo.util.UserSession;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @ThreadSafe
 @Controller
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 public class TaskController {
 
     private final TaskService taskService;
+    private final CategoryService categoryService;
+    private final PriorityService priorityService;
 
     @GetMapping("/")
     public String all(Model model, HttpSession session) {
@@ -48,16 +51,18 @@ public class TaskController {
 
     @GetMapping("/formAdd")
     public String addTask(Model model) {
-        model.addAttribute("task", new Task(0, "",
-                LocalDateTime.now(), false, new User(), new Priority()));
+        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("priorities", priorityService.getAll());
         return "/task/add";
     }
 
     @PostMapping("/create")
-    public String create(Model model, @ModelAttribute Task task, HttpSession session) {
+    public String create(Model model,
+                         @ModelAttribute Task task,
+                         @RequestParam(value = "categoriesId", required = false) List<Integer> categoriesId,
+                         HttpSession session) {
         User user = UserSession.getUser(session);
-        boolean success = taskService.add(task, user);
-        if (!success) {
+        if (!taskService.add(task, user, categoriesId)) {
             model.addAttribute("fail", true);
             return "/shared/error";
         }

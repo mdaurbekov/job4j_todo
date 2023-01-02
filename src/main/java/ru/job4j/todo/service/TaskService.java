@@ -11,6 +11,7 @@ import ru.job4j.todo.util.UserSession;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ThreadSafe
@@ -18,11 +19,20 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final CategoryService categoryService;
 
-    public boolean add(Task task, User user) {
-        task.setUser(user);
-        task.setCreated(LocalDateTime.now());
-        return taskRepository.add(task);
+    public boolean add(Task task, User user, List<Integer> categoriesId) {
+        boolean result = false;
+        task.setCategory(categoriesId.stream()
+                .map(e -> categoryService.findById(e)
+                        .orElseThrow(NoSuchElementException::new))
+                .toList());
+        if (categoryService.findById(task.getPriority().getId()).isPresent()) {
+            task.setUser(user);
+            task.setCreated(LocalDateTime.now());
+            result = taskRepository.add(task);
+        }
+        return result;
     }
 
     public Optional<Task> findById(int id) {

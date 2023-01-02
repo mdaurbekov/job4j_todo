@@ -9,4 +9,7 @@
     <include file="scripts/003_alter_table_tasks.sql" relativeToChangelogFile="true"/>
     <include file="scripts/004_create_table_priorities.sql" relativeToChangelogFile="true"/>
     <include file="scripts/005_alter_table_tasks.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/006_create_table_categories.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/007_insert_categories.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/008_create_table_participates.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
