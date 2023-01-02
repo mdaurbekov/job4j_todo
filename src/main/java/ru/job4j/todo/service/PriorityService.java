@@ -19,7 +19,7 @@ public class PriorityService {
         return priorityRepository.getAll();
     }
 
-    private Optional<Priority> findById(int id) {
+    public Optional<Priority> findById(int id) {
         return priorityRepository.findById(id);
     }
 }

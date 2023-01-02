@@ -1,7 +1,7 @@
 # Project exclude paths
 /target/
 /.idea/
-/testdb.mv.db
-/testdb.trace.db
 /job4j_todo.iml
 /src/main/java/ru/job4j/todo/Test.java
+/testdb.trace.db
+/testdb.mv.db

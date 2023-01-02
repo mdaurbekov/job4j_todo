@@ -26,4 +26,9 @@ public class CategoryRepository {
                 Map.of("fId", id)
         );
     }
+
+    public List<Category> findListById(List<Integer> categoriesId) {
+        return crudRepository.query("from Category c where c.id in :fId",
+                Category.class, Map.of("fId", categoriesId));
+    }
 }

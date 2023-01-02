@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "priorities")
 public class Priority {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
